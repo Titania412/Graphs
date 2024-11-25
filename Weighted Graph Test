@@ -1,0 +1,92 @@
+public class WeightedGraphTest {
+	public static void main(String[] arg) {
+		
+		String [] vertices = {"Boston", "New York", "Atlanta", "Miami", "Chicago", "Denver", "Kansas City", "Dallas", "Houston", "Seattle", "San Francisco", "Los Angeles"};
+		
+		int[][] edges = { 
+				{0,1,214}, {0, 4,983},
+				{1,0,214}, {1,2,888}, {1,4,787}, {1,6,1260},
+				{2,1,888}, {2,3,661}, {2,6,864}, {2,7,781}, {2,8,810},
+				{3,2,661}, {3,8,1187},
+				{4,0,983}, {4,1,787}, {4,5,1003}, {4,6,533}, {4,9,2097},
+				{5,4,1003}, {5,6,590}, {5,9,1331}, {5,10,1267}, {5,11,1015},
+				{6,1,1260}, {6,2,864}, {6,4,533}, {6,5,590}, {6,7,496}, {6,11,1663},
+				{7,2,781}, {7,6,496}, {7,8,239}, {7,11,1435},
+				{8,2,810}, {8,3,1187}, {8,7,239},
+				{9,4,2097}, {9,5,1331}, {9,10,807},
+				{10,5,1267}, {10,9,807}, {10,11,381},
+				{11,5,1015}, {11,6,1663}, {11,7,1435}, {11,10,381}
+			};
+			
+		WeightedGraph<String> weighted = new WeightedGraph<>(vertices, edges);
+		
+		System.out.println("Weighted graph size: " + weighted.getSize());
+	    System.out.println("Vertices: " + weighted.getVertices());
+	    System.out.println("The vertex with index 2 is " + weighted.getVertex(2));
+	    System.out.println("The index for Houston is " + weighted.getIndex("Houston"));
+	    System.out.println("Neighbors of Kansas City: " + weighted.getNeighbors(6));
+	    System.out.println("Degree of Kansas City: " + weighted.getDegree(6));
+	    
+	    System.out.println("\nTesting Weighted graph: ");
+	    weighted.printEdges(); //string version
+	    System.out.println(" ");
+	    weighted.printWeightedEdges(); //integer version
+
+	    //Testing another weighted graph
+	    int[][] edges2 = {
+	    	 {0, 1, 2}, {0, 3, 8},
+	    	 {1, 0, 2}, {1, 2, 7}, {1, 3, 3},
+	    	 {2, 1, 7}, {2, 3, 4}, {2, 4, 5},
+	    	 {3, 0, 8}, {3, 1, 3}, {3, 2, 4}, {3, 4, 6},
+	    	 {4, 2, 5}, {4, 3, 6}
+	    	};
+	    	      
+	    WeightedGraph<Integer> weighted2 = new WeightedGraph<>(edges2, 5); 
+	    System.out.println("\nThe edges for weighted graph #2:");     
+	    weighted2.printWeightedEdges();
+	    
+	    System.out.println("\nAdding 5 as vertex and (5,0,10) as edge:");     
+	    weighted2.addVertex(5);
+	    weighted2.addEdge(5,0,10);
+	    
+	    System.out.println("The edges after adding:");     
+	    weighted2.printWeightedEdges();	
+	    
+	    //MinimumSpanningTree method 
+	    WeightedGraph<String> MinimumSpanningTree = new WeightedGraph<>(vertices, edges);
+	   
+	    //MinimumSpanningTree Boston 
+	    WeightedGraph<String>.MST MinSpanningTreeBoston = MinimumSpanningTree.getMinimumSpanningTree(0);
+	    System.out.println("\nMinimum Spanning Tree: Total weight is " + MinSpanningTreeBoston.getTotalWeight());
+	    MinSpanningTreeBoston.printTree();
+	    
+	    System.out.println("Show the search order starting from Boston:");   
+	    for (int i: MinSpanningTreeBoston.getSearchOrder())
+	    System.out.print(MinimumSpanningTree.getVertex(i) + " ");
+	    
+	    //MinimumSpanningTree Chicago 
+	    WeightedGraph<String>.MST MinSpanningTreeChicago = MinimumSpanningTree.getMinimumSpanningTree(4);
+	    System.out.println("\n\nMinimum Spanning Tree: Total weight is " + MinSpanningTreeChicago.getTotalWeight());
+	    MinSpanningTreeChicago.printTree();
+	    
+	    System.out.println("Show the search order starting from Chicago:");   
+	    for (int i: MinSpanningTreeChicago.getSearchOrder())
+	    System.out.print(MinimumSpanningTree.getVertex(i) + " "); 
+	    System.out.println(" ");
+
+	    //ShortestPath Method
+	    
+	    WeightedGraph<String> ShortestPath = new WeightedGraph<>(vertices, edges);
+	    
+	    // ShortestPath Boston
+	    WeightedGraph<String>.ShortestPathTree ShortestPathBoston = ShortestPath.getShortestPath(ShortestPath.getIndex("Boston"));
+	    System.out.println(" ");
+	    ShortestPathBoston.printAllPaths();
+	    
+	    // ShortestPath Chicago
+	    WeightedGraph<String>.ShortestPathTree ShortestPathChicago = ShortestPath.getShortestPath(ShortestPath.getIndex("Chicago"));
+	    System.out.println(" ");
+	    ShortestPathChicago.printAllPaths();
+	    
+	}
+}
