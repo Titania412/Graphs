@@ -1,2 +1,2 @@
 # Graphs
-There are two different graphs, unweighted and weighted. Prints the graph information, shortest path method, DFS method, BFS method, edges, vertices, and minimum spanning tree
+There are two different graphs, unweighted and weighted. The unweighted graph prints infomration about the graph and the edges and vertices. Also, print using breadth first search (BFS) or depth first search (DFS) method from a certain starting points, the search order, and the path way from start to end. The weight graph prints information about the graph, the edge and vertices, and the integer version of the edge and vertices. It also prints the using the shortest path and mininmum spanning tree method with different starting points.
