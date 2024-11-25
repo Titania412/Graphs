@@ -1,0 +1,100 @@
+public class UnweightedGraphTest {
+	public static void main(String[] arg) {
+	
+	String [] vertices = {"Boston", "New York", "Atlanta", "Miami", "Chicago", "Denver", "Kansas City", "Dallas", "Houston", "Seattle", "San Francisco", "Los Angeles"};
+	
+	int[][] edges = { 
+		{0,1}, {0, 4},
+		{1,0}, {1,2}, {1,4}, {1,6},
+		{2,1}, {2,3}, {2,6}, {2,7}, {2,8},
+		{3,2}, {3,8},
+		{4,0}, {4,1}, {4,5}, {4,6}, {4,9},
+		{5,4}, {5,6}, {5,9}, {5,10}, {5,11},
+		{6,1}, {6,2}, {6,4}, {6,5}, {6,7}, {6,11},
+		{7,2}, {7,6}, {7,8}, {7,11},
+		{8,2}, {8,3}, {8,7},
+		{9,4}, {9,5}, {9,10},
+		{10,5}, {10,9}, {10,11},
+		{11,5}, {11,6}, {11,7}, {11,10}
+	};
+	
+	Graph<String> unweighted = new UnweightedGraph<>(vertices, edges);
+
+	System.out.println("Unweighted graph size: " + unweighted.getSize());
+    System.out.println("Vertices: " + unweighted.getVertices());
+    System.out.println("The vertex with index 5 is " + unweighted.getVertex(5));
+    System.out.println("The index for Dallas is " + unweighted.getIndex("Dallas"));
+    System.out.println("Neighbors of Boston: " + unweighted.getNeighbors(0));
+    System.out.println("Degree of Boston: " + unweighted.getDegree(0));
+    
+    System.out.println("\nTesting Unweighted graph: ");
+	unweighted.printEdges();
+
+	unweighted.clear();
+	
+	System.out.println("\nUnweighted graph size after clear: " + unweighted.getSize());
+    
+	System.out.println("\nUnweighted graph #2:");
+
+	//Testing another unweighted graph
+	String[] vertices2 = {"New Jersey", "Texas", "Florida", "Ohio", "Wyoming"};
+	java.util.ArrayList<Edge> edgeList = new java.util.ArrayList<>();
+	edgeList.add(new Edge(0, 2));
+	edgeList.add(new Edge(1, 2));
+	edgeList.add(new Edge(2, 4));
+	edgeList.add(new Edge(3, 4));
+	edgeList.add(new Edge(4, 0));
+	
+	Graph<String> unweighted2 = new UnweightedGraph<>(java.util.Arrays.asList(vertices2), edgeList); 
+
+	System.out.println("The number of vertices: " + unweighted2.getSize());
+	System.out.println("The edges:");
+	unweighted2.printEdges();
+	
+	System.out.println("\nAdding Maine and (5,0)");
+
+	unweighted2.addVertex("Maine");
+	unweighted2.addEdge(5, 0);
+	
+	System.out.println("The number of vertices after adding: " + unweighted2.getSize());
+	System.out.println("The edges:");
+	unweighted2.printEdges();
+	
+	//DFS method
+	Graph<String> DFSgraph = new UnweightedGraph<>(vertices, edges);
+	
+	//DFS Boston
+	System.out.println("\nDFS starting from Boston:");
+	UnweightedGraph<String>.SearchTree DFSBoston = DFSgraph.dfs(0);
+	
+	System.out.println("Search Order: " + DFSBoston.getSearchOrder());
+	System.out.println("Boston to Los Angeles path:");
+	DFSBoston.printPath(11);
+	
+	//DFS Chicago
+	System.out.println("\n\nDFS starting from Chicago:");
+	UnweightedGraph<String>.SearchTree DFSChicago= DFSgraph.dfs(4);
+	
+	System.out.println("Search Order: " + DFSChicago.getSearchOrder());
+	System.out.println("Chicago to Los Angeles path:");
+	DFSChicago.printPath(11);
+	
+	//BFS method
+	Graph<String> BFSgraph = new UnweightedGraph<>(vertices, edges);
+	
+	//BFS Boston
+	System.out.println("\n\nBFS starting from Boston:");
+    UnweightedGraph<String>.SearchTree BFSBoston = BFSgraph.bfs(0);
+    System.out.println("Search Order: " + BFSBoston.getSearchOrder());
+    System.out.println("Boston to Los Angeles path:");
+    BFSBoston.printPath(11);
+     
+ 	//BFS Chicago
+	System.out.println("\n\nBFS starting from Chicago:");
+    UnweightedGraph<String>.SearchTree BFSChicago = BFSgraph.bfs(4);
+    System.out.println("Search Order: " + BFSChicago.getSearchOrder());
+    System.out.println("Chicagoto to Los Angeles path:");
+    BFSChicago.printPath(11);
+	
+	}
+}
